@@ -172,11 +172,12 @@
 
     /* ─────────────── Hero ─────────────── */
     .hero {
-      padding: 96px 0 88px;
+      min-height: calc(100vh - 80px);
+      padding: 80px 0 96px;
       display: grid;
-      grid-template-columns: 1fr 168px;
-      gap: 64px;
-      align-items: start;
+      grid-template-columns: 1fr 240px;
+      gap: 72px;
+      align-items: center;
     }
     .hero-name {
       font-family: var(--serif-display);
@@ -236,8 +237,8 @@
 
     /* Portrait */
     .portrait {
-      width: 168px;
-      height: 210px;
+      width: 240px;
+      height: 320px;
       overflow: hidden;
       background: var(--bg-tint);
       position: relative;
@@ -587,7 +588,7 @@
         gap: 40px;
         padding: 60px 0 56px;
       }
-      .portrait { width: 132px; height: 165px; order: -1; }
+      .portrait { width: 200px; height: 266px; order: -1; }
       .sec-head, .sec-body, .pub, .cv-line, .foot-grid {
         grid-template-columns: 1fr;
         gap: 6px;
@@ -746,11 +747,11 @@
                 </div>
                 <div className="meta-item">
                   <p className="meta-label">Methods</p>
-                  <p className="meta-val">IV · Regression discontinuity · Difference-in-differences</p>
+                  <p className="meta-val">IV · Regression discontinuity · Difference-in-differences · Fixed effects</p>
                 </div>
                 <div className="meta-item">
                   <p className="meta-label">Tools</p>
-                  <p className="meta-val">Python · R · LaTeX</p>
+                  <p className="meta-val">Python · R · Stata · LaTeX</p>
                 </div>
                 <div className="meta-item">
                   <p className="meta-label">Affiliation</p>
