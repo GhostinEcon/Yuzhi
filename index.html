@@ -1,0 +1,1011 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Yuzhi (Emrys) Zhou</title>
+  <meta name="description" content="Yuzhi (Emrys) Zhou — PhD candidate in Economics at the Australian National University. Applied microeconomics and the economics of education." />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=Spectral:ital,wght@0,400;0,500;1,400&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet" />
+
+  <script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+
+  <style>
+    /* ─────────────── Tokens ─────────────── */
+    :root {
+      --bg: #fbfaf6;
+      --bg-tint: #f4f2ec;
+      --ink: #1a1a1a;
+      --ink-soft: #3d3d3d;
+      --ink-muted: #8a857c;
+      --ink-faint: #b8b3aa;
+      --rule: #e6e2d8;
+      --rule-strong: #cfc9bc;
+      --accent: #6b1f2e;
+      --accent-soft: #a05566;
+      --accent-bg: rgba(107, 31, 46, 0.06);
+      --serif-display: 'Cormorant Garamond', 'Didot', 'Bodoni 72', 'Garamond', Georgia, serif;
+      --serif: 'Spectral', 'Iowan Old Style', Georgia, serif;
+      --sans: 'Inter', system-ui, -apple-system, sans-serif;
+      --mono: 'JetBrains Mono', ui-monospace, monospace;
+    }
+    [data-theme="ink"] {
+      --bg: #fbfaf6;
+      --bg-tint: #f3f2ec;
+      --ink: #131313;
+      --ink-soft: #363636;
+      --ink-muted: #7c7770;
+      --ink-faint: #bdb8af;
+      --rule: #e2ddd2;
+      --rule-strong: #c9c2b3;
+      --accent: #131313;
+      --accent-soft: #4a4a4a;
+      --accent-bg: rgba(19, 19, 19, 0.05);
+    }
+    [data-theme="forest"] {
+      --bg: #f8f7f1;
+      --bg-tint: #ecebe2;
+      --ink: #14201a;
+      --ink-soft: #354039;
+      --ink-muted: #767f73;
+      --ink-faint: #b3b8ac;
+      --rule: #d8d8c8;
+      --rule-strong: #b9b9a4;
+      --accent: #2c4a2f;
+      --accent-soft: #587a55;
+      --accent-bg: rgba(44, 74, 47, 0.07);
+    }
+    [data-theme="midnight"] {
+      --bg: #131418;
+      --bg-tint: #1b1d22;
+      --ink: #ece8de;
+      --ink-soft: #c4bfb2;
+      --ink-muted: #807a6d;
+      --ink-faint: #4f4a42;
+      --rule: #2a2c32;
+      --rule-strong: #3a3d44;
+      --accent: #d4a574;
+      --accent-soft: #b48b5d;
+      --accent-bg: rgba(212, 165, 116, 0.08);
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    ::selection { background: var(--accent-bg); color: var(--accent); }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--ink);
+      font-family: var(--serif);
+      font-size: 19px;
+      line-height: 1.6;
+      font-feature-settings: "kern" 1, "liga" 1, "onum" 1;
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+      transition: background-color 0.4s ease, color 0.4s ease;
+    }
+
+    /* Anchor offset for sticky-ish nav */
+    section[id] { scroll-margin-top: 24px; }
+
+    a {
+      color: var(--ink);
+      text-decoration: none;
+      border-bottom: 0.5px solid var(--ink-faint);
+      transition: color 0.2s, border-color 0.2s;
+      padding-bottom: 0.5px;
+    }
+    a:hover {
+      color: var(--accent);
+      border-bottom-color: var(--accent);
+    }
+
+    /* ─────────────── Layout ─────────────── */
+    .frame {
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 0 40px;
+    }
+
+    /* ─────────────── Top bar ─────────────── */
+    .topbar {
+      padding: 36px 0 0;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+    }
+    .mark {
+      font-family: var(--serif-display);
+      font-size: 18px;
+      font-style: italic;
+      font-weight: 500;
+      letter-spacing: 0.005em;
+      color: var(--ink-muted);
+      border: none;
+    }
+    .nav {
+      display: flex;
+      gap: 26px;
+      font-family: var(--sans);
+      font-size: 11px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+    }
+    .nav a {
+      color: var(--ink-muted);
+      border: none;
+      position: relative;
+      padding-bottom: 4px;
+    }
+    .nav a:after {
+      content: "";
+      position: absolute;
+      left: 0; right: 0; bottom: 0;
+      height: 0.5px;
+      background: var(--accent);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.3s ease;
+    }
+    .nav a:hover { color: var(--accent); }
+    .nav a:hover:after,
+    .nav a.active:after { transform: scaleX(1); }
+    .nav a.active { color: var(--accent); }
+
+    /* ─────────────── Hero ─────────────── */
+    .hero {
+      padding: 96px 0 88px;
+      display: grid;
+      grid-template-columns: 1fr 168px;
+      gap: 64px;
+      align-items: start;
+    }
+    .hero-name {
+      font-family: var(--serif-display);
+      font-size: clamp(48px, 7vw, 78px);
+      line-height: 1.0;
+      letter-spacing: -0.022em;
+      font-weight: 500;
+      margin: 0 0 6px;
+      color: var(--ink);
+    }
+    .hero-name .alt {
+      font-style: italic;
+      font-weight: 400;
+      color: var(--accent);
+      letter-spacing: -0.01em;
+    }
+    .hero-han {
+      font-family: var(--serif-display);
+      font-style: italic;
+      font-weight: 400;
+      font-size: 22px;
+      color: var(--ink-faint);
+      margin: 0 0 36px;
+      letter-spacing: 0.05em;
+    }
+    .hero-tagline {
+      font-family: var(--serif-display);
+      font-size: 26px;
+      line-height: 1.4;
+      color: var(--ink-soft);
+      margin: 0 0 28px;
+      max-width: 28ch;
+      font-weight: 400;
+    }
+    .hero-tagline em {
+      color: var(--ink);
+      font-style: italic;
+      font-weight: 500;
+    }
+    .hero-affil {
+      font-family: var(--sans);
+      font-size: 12px;
+      letter-spacing: 0.06em;
+      color: var(--ink-muted);
+      margin: 0;
+    }
+    .hero-affil a {
+      color: var(--ink-soft);
+      border-bottom-color: var(--rule-strong);
+    }
+    .hero-affil .sep {
+      display: inline-block;
+      width: 18px;
+      text-align: center;
+      color: var(--ink-faint);
+    }
+
+    /* Portrait */
+    .portrait {
+      width: 168px;
+      height: 210px;
+      overflow: hidden;
+      background: var(--bg-tint);
+      position: relative;
+      margin-top: 8px;
+    }
+    .portrait img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center 25%;
+    }
+
+    /* ─────────────── Sections ─────────────── */
+    section.section {
+      padding: 72px 0 8px;
+      position: relative;
+    }
+    .section + .section { padding-top: 56px; }
+
+    .sec-head {
+      display: grid;
+      grid-template-columns: 96px 1fr;
+      gap: 24px;
+      align-items: baseline;
+      margin: 0 0 36px;
+      padding-bottom: 16px;
+      border-bottom: 0.5px solid var(--rule);
+    }
+    .sec-num {
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 0.22em;
+      color: var(--ink-faint);
+      text-transform: uppercase;
+    }
+    .sec-title {
+      font-family: var(--serif-display);
+      font-size: 34px;
+      font-style: italic;
+      font-weight: 500;
+      letter-spacing: -0.012em;
+      margin: 0;
+      color: var(--ink);
+    }
+
+    .sec-body {
+      display: grid;
+      grid-template-columns: 96px 1fr;
+      gap: 24px;
+    }
+    .sec-body > .col-side { color: var(--ink-faint); }
+
+    /* ─────────────── About ─────────────── */
+    .prose {
+      font-family: var(--serif);
+      font-size: 19px;
+      line-height: 1.7;
+      color: var(--ink);
+      max-width: 60ch;
+    }
+    .prose p { margin: 0 0 1.05em; }
+    .prose p:last-child { margin-bottom: 0; }
+    .prose em { font-style: italic; color: var(--ink); }
+
+    .meta-grid {
+      margin-top: 32px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 22px 40px;
+    }
+    .meta-item .meta-label {
+      font-family: var(--sans);
+      font-size: 10px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--ink-faint);
+      margin: 0 0 4px;
+    }
+    .meta-item .meta-val {
+      font-family: var(--serif);
+      font-size: 16px;
+      line-height: 1.45;
+      color: var(--ink-soft);
+      margin: 0;
+    }
+    .meta-item .meta-val a { color: var(--ink-soft); border-bottom-color: var(--rule-strong); }
+
+    /* ─────────────── Research ─────────────── */
+    .pubs {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+    .pub {
+      padding: 18px 0 24px;
+      border-top: 0.5px solid var(--rule);
+      display: grid;
+      grid-template-columns: 96px 1fr;
+      gap: 24px;
+      align-items: baseline;
+    }
+    .pub:first-child { border-top: none; padding-top: 4px; }
+    .pub-meta {
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 0.14em;
+      color: var(--ink-muted);
+      text-transform: uppercase;
+      padding-top: 4px;
+      line-height: 1.6;
+    }
+    .pub-meta .yr {
+      display: block;
+      color: var(--ink-soft);
+      font-size: 11px;
+      letter-spacing: 0.08em;
+    }
+    .pub-meta .stat {
+      display: block;
+      margin-top: 2px;
+      color: var(--ink-faint);
+    }
+    .pub-meta .stat.published { color: var(--accent); }
+
+    .pub-title {
+      font-family: var(--serif-display);
+      font-size: 24px;
+      line-height: 1.25;
+      font-weight: 500;
+      letter-spacing: -0.012em;
+      margin: 0 0 6px;
+      color: var(--ink);
+    }
+    .pub-title a {
+      color: var(--ink);
+      border: none;
+    }
+    .pub-title a:hover { color: var(--accent); }
+
+    .pub-authors {
+      font-family: var(--serif);
+      font-size: 16px;
+      font-style: italic;
+      color: var(--ink-muted);
+      margin: 0 0 4px;
+    }
+    .pub-authors .me {
+      color: var(--ink);
+      font-style: normal;
+      text-decoration: underline;
+      text-decoration-color: var(--rule-strong);
+      text-underline-offset: 3px;
+      text-decoration-thickness: 0.5px;
+    }
+    .pub-venue {
+      font-family: var(--serif);
+      font-size: 15px;
+      color: var(--ink-soft);
+      margin: 0 0 12px;
+    }
+    .pub-venue em { font-style: italic; color: var(--ink); }
+    .pub-venue .dot {
+      display: inline-block;
+      width: 16px;
+      text-align: center;
+      color: var(--ink-faint);
+    }
+
+    .pub-actions {
+      display: flex;
+      gap: 18px;
+      flex-wrap: wrap;
+      margin-top: 4px;
+      align-items: center;
+    }
+    .pub-link {
+      font-family: var(--sans);
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--accent);
+      border: none;
+      border-bottom: 0.5px solid var(--accent);
+      padding-bottom: 1px;
+    }
+    .pub-link:hover { color: var(--ink); border-bottom-color: var(--ink); }
+    .pub-toggle {
+      font-family: var(--sans);
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      background: none;
+      border: none;
+      padding: 0 0 1px;
+      color: var(--ink-muted);
+      cursor: pointer;
+      border-bottom: 0.5px dashed var(--ink-muted);
+    }
+    .pub-toggle:hover { color: var(--accent); border-bottom-color: var(--accent); }
+
+    .pub-abstract {
+      max-width: 58ch;
+      margin: 14px 0 0;
+      font-family: var(--serif);
+      font-size: 16px;
+      line-height: 1.6;
+      color: var(--ink-soft);
+      padding-left: 14px;
+      border-left: 0.5px solid var(--rule-strong);
+      overflow: hidden;
+    }
+
+    /* ─────────────── CV ─────────────── */
+    .cv-line {
+      display: grid;
+      grid-template-columns: 96px 1fr;
+      gap: 24px;
+      align-items: baseline;
+      padding: 12px 0;
+      border-top: 0.5px solid var(--rule);
+    }
+    .cv-line:first-of-type { border-top: none; }
+    .cv-line .yr {
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 0.06em;
+      color: var(--ink-muted);
+    }
+    .cv-line .desc {
+      font-family: var(--serif);
+      font-size: 17px;
+      color: var(--ink);
+      line-height: 1.45;
+    }
+    .cv-line .desc .org {
+      color: var(--ink-soft);
+      font-style: italic;
+    }
+
+    .cv-pdf {
+      margin-top: 28px;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-family: var(--sans);
+      font-size: 11px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--ink);
+      border: none;
+      padding: 12px 0;
+    }
+    .cv-pdf .arrow {
+      display: inline-flex;
+      width: 22px;
+      height: 22px;
+      align-items: center;
+      justify-content: center;
+      border: 0.5px solid var(--ink);
+      border-radius: 50%;
+      transition: background 0.25s ease, color 0.25s ease, transform 0.3s ease;
+    }
+    .cv-pdf:hover { color: var(--accent); }
+    .cv-pdf:hover .arrow {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: var(--bg);
+      transform: translateY(2px);
+    }
+
+    /* ─────────────── Footer ─────────────── */
+    footer.foot {
+      margin-top: 80px;
+      padding: 40px 0 64px;
+      border-top: 0.5px solid var(--rule);
+    }
+    .foot-grid {
+      display: grid;
+      grid-template-columns: 96px 1fr;
+      gap: 24px;
+      align-items: baseline;
+    }
+    .foot-grid .col-side {
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--ink-faint);
+    }
+    .foot-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 24px;
+      flex-wrap: wrap;
+      align-items: baseline;
+    }
+    .foot-mail {
+      font-family: var(--serif-display);
+      font-size: 28px;
+      font-style: italic;
+      font-weight: 500;
+      color: var(--ink);
+      letter-spacing: -0.012em;
+    }
+    .foot-mail a {
+      color: var(--ink);
+      border-bottom-color: var(--rule-strong);
+    }
+    .foot-mail a:hover { border-bottom-color: var(--accent); color: var(--accent); }
+
+    .foot-links {
+      display: flex;
+      gap: 22px;
+      font-family: var(--sans);
+      font-size: 11px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+    }
+    .foot-links a {
+      color: var(--ink-muted);
+      border: none;
+      padding-bottom: 2px;
+      border-bottom: 0.5px solid transparent;
+    }
+    .foot-links a:hover { color: var(--accent); border-bottom-color: var(--accent); }
+
+    .foot-tail {
+      margin-top: 28px;
+      padding-top: 16px;
+      border-top: 0.5px solid var(--rule);
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--ink-faint);
+    }
+
+    /* ─────────────── Responsive ─────────────── */
+    @media (max-width: 720px) {
+      body { font-size: 17px; }
+      .frame { padding: 0 24px; }
+      .hero {
+        grid-template-columns: 1fr;
+        gap: 40px;
+        padding: 60px 0 56px;
+      }
+      .portrait { width: 132px; height: 165px; order: -1; }
+      .sec-head, .sec-body, .pub, .cv-line, .foot-grid {
+        grid-template-columns: 1fr;
+        gap: 6px;
+      }
+      .sec-num, .pub-meta, .cv-line .yr, .foot-grid .col-side { margin-bottom: 4px; }
+      .meta-grid { grid-template-columns: 1fr; }
+      .nav { gap: 18px; }
+    }
+
+    /* Print */
+    @media print {
+      .nav, .pub-toggle, #tweaks-root, .topbar, footer.foot { display: none; }
+      body { background: white; color: black; }
+    }
+
+    /* Subtle entrance */
+    .reveal { opacity: 0; transform: translateY(6px); transition: opacity .7s ease, transform .7s ease; }
+    .reveal.in { opacity: 1; transform: none; }
+  </style>
+</head>
+<body data-theme="ink">
+
+  <div id="root"></div>
+
+  <script type="text/babel" data-presets="react">
+    const { useState, useEffect, useRef } = React;
+
+    /* ─────────────── Tweaks ─────────────── */
+    const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{
+      "theme": "ink",
+      "showPortrait": true
+    }/*EDITMODE-END*/;
+
+    function useTweaks(defaults) {
+      const [vals, setVals] = useState(defaults);
+      const setKey = (k, v) => {
+        const next = typeof k === 'object' ? { ...vals, ...k } : { ...vals, [k]: v };
+        setVals(next);
+        const edits = typeof k === 'object' ? k : { [k]: v };
+        try { window.parent.postMessage({ type: '__edit_mode_set_keys', edits }, '*'); } catch {}
+      };
+      return [vals, setKey];
+    }
+
+    /* ─────────────── Data ─────────────── */
+    const PORTRAIT = 'assets/yuzhi-portrait.png';
+
+    const PUBLICATIONS = [
+      {
+        id: 'rank-peer',
+        year: '2025',
+        status: 'Published',
+        statusClass: 'published',
+        title: 'Rank, peer achievement, and shadow education: Evidence from secondary school students in China',
+        authors: ['Dai, C.', 'Zhou, Y.'],
+        venue: 'Economics of Education Review',
+        issue: 'Vol. 108 · Article 102682',
+        abstract: 'Using large-scale administrative panel data on Chinese secondary-school students, we identify the causal effect of within-classroom academic rank and peer achievement on household investment in private tutoring (“shadow education”). Exploiting discrete ranking thresholds via a regression-discontinuity design and instrumental-variable strategies, we show that relative standing — rather than absolute achievement — drives out-of-school investment, with implications for educational inequality.',
+        links: [
+          { label: 'Journal', url: 'https://www.sciencedirect.com/science/article/pii/S0272775725000627' }
+        ]
+      },
+      {
+        id: 'ssrn',
+        year: '2025',
+        status: 'Working paper',
+        statusClass: '',
+        title: 'Working paper · applied microeconomics & education',
+        authors: ['Zhou, Y.'],
+        venue: 'SSRN',
+        issue: 'Manuscript',
+        abstract: 'Working paper drawing on large-scale administrative student-level data to address questions in applied microeconomics and the economics of education.',
+        links: [
+          { label: 'SSRN', url: 'https://ssrn.com/abstract=5575350' }
+        ]
+      }
+    ];
+
+    const CV_HIGHLIGHTS = [
+      { yr: '2022 –', desc: 'PhD in Economics', org: 'Australian National University' },
+      { yr: '2020 – 22', desc: 'Master of Economics', org: 'Australian National University' },
+      { yr: '2025 –', desc: 'Seminar Coordinator', org: 'Research School of Economics, ANU' },
+      { yr: '2025 –', desc: 'Ordinary Committee Member', org: 'Economic Society of Australia (ACT Branch)' }
+    ];
+
+    /* ─────────────── Components ─────────────── */
+    function TopBar({ active }) {
+      const items = [
+        { id: 'about', label: 'About' },
+        { id: 'research', label: 'Research' },
+        { id: 'cv', label: 'CV' },
+        { id: 'contact', label: 'Contact' }
+      ];
+      return (
+        <header className="topbar frame">
+          <a href="#top" className="mark">Yuzhi Zhou</a>
+          <nav className="nav">
+            {items.map(it => (
+              <a key={it.id} href={`#${it.id}`} className={active === it.id ? 'active' : ''}>{it.label}</a>
+            ))}
+          </nav>
+        </header>
+      );
+    }
+
+    function Hero({ showPortrait }) {
+      return (
+        <section className="hero frame" id="top" data-screen-label="Hero">
+          <div>
+            <h1 className="hero-name">
+              Yuzhi Zhou <span className="alt">(Emrys)</span>
+            </h1>
+            <p className="hero-han">周昱芝</p>
+            <p className="hero-tagline">
+              PhD candidate in Economics <em>ANU</em>
+            </p>
+            <p className="hero-affil">
+              Research School of Economics
+              <span className="sep">·</span>
+              <a href="https://rse.anu.edu.au/people/yuzhi-zhou" target="_blank" rel="noreferrer">ANU profile</a>
+            </p>
+          </div>
+          {showPortrait && (
+            <div className="portrait" aria-hidden="false">
+              <img src={PORTRAIT} alt="Yuzhi Zhou" loading="eager" />
+            </div>
+          )}
+        </section>
+      );
+    }
+
+    function About() {
+      return (
+        <section className="section frame" id="about" data-screen-label="About">
+          <div className="sec-head">
+            <span className="sec-num">i.</span>
+            <h2 className="sec-title">About</h2>
+          </div>
+          <div className="sec-body">
+            <span className="col-side" />
+            <div>
+              <div className="prose">
+                <p>
+                  PhD candidate at the Australian National University, advised by
+                  Ashley Craig (chair), Maria Racionero Llorente, and Johannes Kunz.
+                  I use administrative microdata and quasi-experimental designs to study
+                  how schools, peers, and institutions shape educational inequality.
+                </p>
+              </div>
+
+              <div className="meta-grid">
+                <div className="meta-item">
+                  <p className="meta-label">Fields</p>
+                  <p className="meta-val">Applied microeconomics · Economics of education · Labour</p>
+                </div>
+                <div className="meta-item">
+                  <p className="meta-label">Methods</p>
+                  <p className="meta-val">IV · Regression discontinuity · Difference-in-differences</p>
+                </div>
+                <div className="meta-item">
+                  <p className="meta-label">Tools</p>
+                  <p className="meta-val">Python · R · LaTeX</p>
+                </div>
+                <div className="meta-item">
+                  <p className="meta-label">Affiliation</p>
+                  <p className="meta-val">
+                    <a href="https://rse.anu.edu.au/people/yuzhi-zhou" target="_blank" rel="noreferrer">
+                      Research School of Economics, ANU
+                    </a>
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      );
+    }
+
+    function PubItem({ pub }) {
+      const [open, setOpen] = useState(false);
+      return (
+        <li className="pub">
+          <div className="pub-meta">
+            <span className="yr">{pub.year}</span>
+            <span className={`stat ${pub.statusClass}`}>{pub.status}</span>
+          </div>
+          <div>
+            <h3 className="pub-title">
+              {pub.links[0]
+                ? <a href={pub.links[0].url} target="_blank" rel="noreferrer">{pub.title}</a>
+                : pub.title}
+            </h3>
+            <p className="pub-authors">
+              {pub.authors.map((a, i) => (
+                <React.Fragment key={i}>
+                  <span className={a.startsWith('Zhou') ? 'me' : ''}>{a}</span>
+                  {i < pub.authors.length - 1 ? ', ' : ''}
+                </React.Fragment>
+              ))}
+            </p>
+            <p className="pub-venue">
+              <em>{pub.venue}</em>
+              <span className="dot">·</span>
+              {pub.issue}
+            </p>
+            <div className="pub-actions">
+              {pub.links.map((l, i) => (
+                <a key={i} className="pub-link" href={l.url} target="_blank" rel="noreferrer">
+                  {l.label} ↗
+                </a>
+              ))}
+              <button className="pub-toggle" onClick={() => setOpen(!open)}>
+                {open ? '— Hide abstract' : '+ Abstract'}
+              </button>
+            </div>
+            {open && (
+              <p className="pub-abstract">{pub.abstract}</p>
+            )}
+          </div>
+        </li>
+      );
+    }
+
+    function Research() {
+      return (
+        <section className="section frame" id="research" data-screen-label="Research">
+          <div className="sec-head">
+            <span className="sec-num">ii.</span>
+            <h2 className="sec-title">Research</h2>
+          </div>
+          <div className="sec-body">
+            <span className="col-side" />
+            <ol className="pubs">
+              {PUBLICATIONS.map(p => <PubItem key={p.id} pub={p} />)}
+            </ol>
+          </div>
+        </section>
+      );
+    }
+
+    function CV() {
+      return (
+        <section className="section frame" id="cv" data-screen-label="CV">
+          <div className="sec-head">
+            <span className="sec-num">iii.</span>
+            <h2 className="sec-title">Curriculum Vitae</h2>
+          </div>
+          <div className="sec-body">
+            <span className="col-side" />
+            <div>
+              <div>
+                {CV_HIGHLIGHTS.map((row, i) => (
+                  <div className="cv-line" key={i}>
+                    <span className="yr">{row.yr}</span>
+                    <span className="desc">
+                      {row.desc} · <span className="org">{row.org}</span>
+                    </span>
+                  </div>
+                ))}
+              </div>
+              <a className="cv-pdf" href="assets/Yuzhi-Zhou-CV.pdf" download>
+                Download full CV (PDF)
+                <span className="arrow">
+                  <svg width="10" height="10" viewBox="0 0 10 10" fill="none" aria-hidden="true">
+                    <path d="M5 1v7m0 0L2.5 5.5M5 8l2.5-2.5" stroke="currentColor" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round" />
+                  </svg>
+                </span>
+              </a>
+            </div>
+          </div>
+        </section>
+      );
+    }
+
+    function Foot() {
+      return (
+        <footer className="foot frame" id="contact" data-screen-label="Contact">
+          <div className="foot-grid">
+            <span className="col-side">Contact</span>
+            <div>
+              <div className="foot-row">
+                <p className="foot-mail">
+                  <a href="mailto:yuzhi.zhou@anu.edu.au">yuzhi.zhou@anu.edu.au</a>
+                </p>
+                <div className="foot-links">
+                  <a href="https://rse.anu.edu.au/people/yuzhi-zhou" target="_blank" rel="noreferrer">ANU</a>
+                  <a href="https://github.com/GhostinEcon/Fun" target="_blank" rel="noreferrer">GitHub</a>
+                  <a href="https://ssrn.com/abstract=5575350" target="_blank" rel="noreferrer">SSRN</a>
+                </div>
+              </div>
+              <div className="foot-tail">
+                <span>© {new Date().getFullYear()} Yuzhi Zhou</span>
+                <span>Canberra, ACT</span>
+              </div>
+            </div>
+          </div>
+        </footer>
+      );
+    }
+
+    /* ─────────────── Tweaks Panel ─────────────── */
+    function TweaksPanel({ tweaks, setTweak, onClose }) {
+      const themes = [
+        { id: 'ink', label: 'Ink', dot: '#131313' },
+        { id: 'aubergine', label: 'Aubergine', dot: '#6b1f2e' },
+        { id: 'forest', label: 'Forest', dot: '#2c4a2f' },
+        { id: 'midnight', label: 'Midnight', dot: '#d4a574' }
+      ];
+      return (
+        <div style={{
+          position: 'fixed', bottom: 24, right: 24, zIndex: 9999, width: 264,
+          background: 'var(--bg)', border: '0.5px solid var(--rule-strong)',
+          fontFamily: 'var(--sans)', fontSize: 12, color: 'var(--ink)',
+          boxShadow: '0 12px 40px rgba(0,0,0,.12)'
+        }}>
+          <div style={{
+            display: 'flex', justifyContent: 'space-between', alignItems: 'center',
+            padding: '12px 16px', borderBottom: '0.5px solid var(--rule)'
+          }}>
+            <span style={{
+              fontFamily: 'var(--mono)', fontSize: 10, letterSpacing: '0.2em',
+              textTransform: 'uppercase', color: 'var(--ink-faint)'
+            }}>Tweaks</span>
+            <button onClick={onClose} style={{
+              background: 'none', border: 'none', color: 'var(--ink-muted)',
+              cursor: 'pointer', fontSize: 16, lineHeight: 1, padding: 0
+            }}>×</button>
+          </div>
+          <div style={{ padding: '14px 16px' }}>
+            <div style={{
+              fontFamily: 'var(--sans)', fontSize: 10, letterSpacing: '0.16em',
+              textTransform: 'uppercase', color: 'var(--ink-faint)', marginBottom: 10
+            }}>Palette</div>
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 6 }}>
+              {themes.map(t => (
+                <button
+                  key={t.id}
+                  onClick={() => setTweak('theme', t.id)}
+                  style={{
+                    display: 'flex', alignItems: 'center', gap: 8,
+                    padding: '7px 10px',
+                    background: tweaks.theme === t.id ? 'var(--accent-bg)' : 'transparent',
+                    border: '0.5px solid',
+                    borderColor: tweaks.theme === t.id ? 'var(--accent)' : 'var(--rule)',
+                    color: 'var(--ink)', cursor: 'pointer',
+                    fontFamily: 'var(--sans)', fontSize: 11, textAlign: 'left',
+                    letterSpacing: '0.04em'
+                  }}
+                >
+                  <span style={{ width: 8, height: 8, borderRadius: '50%', background: t.dot, flexShrink: 0 }} />
+                  {t.label}
+                </button>
+              ))}
+            </div>
+
+            <div style={{
+              fontFamily: 'var(--sans)', fontSize: 10, letterSpacing: '0.16em',
+              textTransform: 'uppercase', color: 'var(--ink-faint)',
+              margin: '18px 0 6px'
+            }}>Display</div>
+            <label style={{
+              display: 'flex', justifyContent: 'space-between', alignItems: 'center',
+              padding: '6px 0', cursor: 'pointer', fontSize: 12
+            }}>
+              <span>Show portrait</span>
+              <input type="checkbox" checked={tweaks.showPortrait} onChange={e => setTweak('showPortrait', e.target.checked)} />
+            </label>
+          </div>
+        </div>
+      );
+    }
+
+    /* ─────────────── App ─────────────── */
+    function App() {
+      const [tweaks, setTweak] = useTweaks(TWEAK_DEFAULTS);
+      const [tweaksOpen, setTweaksOpen] = useState(false);
+      const [active, setActive] = useState('about');
+
+      useEffect(() => {
+        document.body.dataset.theme = tweaks.theme;
+      }, [tweaks.theme]);
+
+      useEffect(() => {
+        const onMsg = (e) => {
+          const t = e.data?.type;
+          if (t === '__activate_edit_mode') setTweaksOpen(true);
+          if (t === '__deactivate_edit_mode') setTweaksOpen(false);
+        };
+        window.addEventListener('message', onMsg);
+        try { window.parent.postMessage({ type: '__edit_mode_available' }, '*'); } catch {}
+        return () => window.removeEventListener('message', onMsg);
+      }, []);
+
+      const closeTweaks = () => {
+        setTweaksOpen(false);
+        try { window.parent.postMessage({ type: '__edit_mode_dismissed' }, '*'); } catch {}
+      };
+
+      useEffect(() => {
+        const ids = ['about', 'research', 'cv', 'contact'];
+        const obs = new IntersectionObserver((entries) => {
+          entries.forEach(e => {
+            if (e.isIntersecting) setActive(e.target.id);
+          });
+        }, { rootMargin: '-30% 0px -60% 0px' });
+        ids.forEach(id => {
+          const el = document.getElementById(id);
+          if (el) obs.observe(el);
+        });
+        return () => obs.disconnect();
+      }, []);
+
+      return (
+        <>
+          <TopBar active={active} />
+          <main>
+            <Hero showPortrait={tweaks.showPortrait} />
+            <About />
+            <Research />
+            <CV />
+          </main>
+          <Foot />
+          {tweaksOpen && (
+            <TweaksPanel tweaks={tweaks} setTweak={setTweak} onClose={closeTweaks} />
+          )}
+        </>
+      );
+    }
+
+    ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+  </script>
+</body>
+</html>
