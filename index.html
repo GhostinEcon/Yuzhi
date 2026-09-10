@@ -660,7 +660,7 @@
       { yr: '2022 –', desc: 'PhD in Economics', org: 'Australian National University' },
       { yr: '2020 – 22', desc: 'Master of Economics', org: 'Australian National University' },
       { yr: '2025 –', desc: 'Seminar Coordinator', org: 'Research School of Economics, ANU' },
-      { yr: '2025 –', desc: 'HDR Student Representative', org: 'Research School of Economics, ANU' },
+      { yr: '2024 –', desc: 'HDR Student Representative', org: 'ANU College of Business and Economics' },
       { yr: '2025 –', desc: 'Ordinary Committee Member', org: 'Economic Society of Australia (ACT)' }
     ];
 
@@ -670,6 +670,7 @@
         { id: 'about', label: 'About' },
         { id: 'research', label: 'Research' },
         { id: 'teaching', label: 'Teaching' },
+        { id: 'conferences', label: 'Conferences' },
         { id: 'cv', label: 'CV' },
         { id: 'contact', label: 'Contact' }
       ];
@@ -858,11 +859,39 @@ Across five semesters in undergraduate and graduate economics. 
       );
     }
 
+    function Conferences() {
+      const talks = [
+        { date: 'Jul 2026', name: 'Australian Conference of Economists (ACE)', loc: 'University of Canberra, Australia' },
+        { date: 'Jul 2026', name: 'Chinese Economists Society (CES) China Annual Conference', loc: 'Southwestern University of Finance and Economics, Chengdu, China' },
+        { date: 'Jun 2026', name: '5th Asian Economic Development Conference (AEDC)', loc: 'Hong Kong University of Science and Technology, Hong Kong' },
+        { date: 'Jun 2026', name: '3rd Development Economics Workshop (DEW)', loc: 'Durham University Business School, UK' }
+      ];
+      return (
+        <section className="section frame" id="conferences" data-screen-label="Conferences">
+          <div className="sec-head">
+            <span className="sec-num">iv.</span>
+            <h2 className="sec-title">Conferences</h2>
+          </div>
+          <div className="sec-body">
+            <span className="col-side" />
+            <div>
+              {talks.map((t, i) => (
+                <div className="cv-line" key={i}>
+                  <span className="yr">{t.date}</span>
+                  <span className="desc">{t.name} · <span className="org">{t.loc}</span></span>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+      );
+    }
+
     function CV() {
       return (
         <section className="section frame" id="cv" data-screen-label="CV">
           <div className="sec-head">
-            <span className="sec-num">iv.</span>
+            <span className="sec-num">v.</span>
             <h2 className="sec-title">Curriculum Vitae</h2>
           </div>
           <div className="sec-body">
@@ -878,7 +907,7 @@ Across five semesters in undergraduate and graduate economics. 
                   </div>
                 ))}
               </div>
-              <a className="cv-pdf" href="assets/Yuzhi-Zhou-CV.pdf" download>
+              <a className="cv-pdf" href="assets/Yuzhi-Zhou-CV.pdf" target="_blank" rel="noreferrer">
                 Download full CV (PDF)
                 <span className="arrow">
                   <svg width="10" height="10" viewBox="0 0 10 10" fill="none" aria-hidden="true">
@@ -1017,7 +1046,7 @@ Across five semesters in undergraduate and graduate economics. 
       };
 
       useEffect(() => {
-        const ids = ['about', 'research', 'teaching', 'cv', 'contact'];
+        const ids = ['about', 'research', 'teaching', 'conferences', 'cv', 'contact'];
         const obs = new IntersectionObserver((entries) => {
           entries.forEach(e => {
             if (e.isIntersecting) setActive(e.target.id);
@@ -1038,6 +1067,7 @@ Across five semesters in undergraduate and graduate economics. 
             <About />
             <Research />
             <Teaching />
+            <Conferences />
             <CV />
           </main>
           <Foot />
