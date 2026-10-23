@@ -655,7 +655,8 @@
       {
         id: 'ssrn',
         year: '2025',
-        status: 'Working paper',
+        status: 'Working paper and Policy engagement',
+        policyEngagement: true,
         statusClass: '',
         title: 'Working paper · applied microeconomics & education',
         authors: ['Zhou, Y.'],
@@ -807,6 +808,25 @@
             </div>
             {open && (
               <p className="pub-abstract">{pub.abstract}</p>
+            )}
+            {pub.policyEngagement && (
+              <div className="prose" style={{ marginTop: 24 }}>
+                <h4 className="meta-label">Policy engagement</h4>
+                <p>
+                  I prepared a submission on parental aspirations for the House of
+                  Representatives Standing Committee on Education's inquiry into
+                  educational attainment and presented evidence at its Parliament
+                  House hearing.
+                </p>
+                <div className="pub-actions">
+                  <a className="pub-link" href="https://www.aph.gov.au/Parliamentary_Business/Committees/House/Education/Educationalattainment/Submissions" target="_blank" rel="noreferrer">
+                    Submission no. 5 ↗
+                  </a>
+                  <a className="pub-link" href="https://www.aph.gov.au/Parliamentary_Business/Committees/House/Education/Educationalattainment" target="_blank" rel="noreferrer">
+                    Inquiry details ↗
+                  </a>
+                </div>
+              </div>
             )}
           </div>
         </li>
